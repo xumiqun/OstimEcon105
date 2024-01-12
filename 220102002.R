@@ -33,7 +33,7 @@ library(stargazer)
 # As opposed to introductions provided by tutor at "R_1-9_revised.docx"
 
 # The original CSV file was renamed to this
-file_path <- "veri_seti.csv"
+file_path <- "deneme.csv"
 
 # Delimeter is encoded with ; on our CSV
 data <- read.csv(file_path, header = TRUE, sep = ";")
@@ -320,6 +320,30 @@ summary(anova_model)
 # Now let's print the regression equation here
 cat("Regression Equation:\n")
 cat(regression_equation, "\n\n")
+
+
+# The code for BoxPlots and saving them
+output_folder = "boxplots"
+if (!dir.exists(output_folder)) {
+  dir.create(output_folder)
+}
+
+# Create box plots for numeric variables
+for (col in colnames(data_numeric)) {
+  if (is.numeric(data_numeric[[col]])) {
+    
+    # Create a box plot
+    boxplot(data_numeric[[col]], main = paste("Boxplot of", col), xlab = col, col = "lightblue", border = "blue", horizontal = TRUE)
+    
+    # Save the box plot as a PNG file
+    boxplot_filename <- paste(output_folder, "/", col, "_boxplot.png", sep = "")
+    png(boxplot_filename, width = 800, height = 600)
+    boxplot(data_numeric[[col]], main = paste("Boxplot of", col), xlab = col, col = "lightblue", border = "blue", horizontal = TRUE)
+    dev.off()
+  }
+}
+
+
 
 
 ################################  END OF CODE ################################
